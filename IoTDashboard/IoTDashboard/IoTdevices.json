@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "X1",
+    "state": "Unknown"
+  },
+  {
+    "id": 2,
+    "name": "X2",
+    "state": "Unknown"
+  },
+  {
+    "id": 3,
+    "name": "X3",
+    "state": "Unknown"
+  }
+]

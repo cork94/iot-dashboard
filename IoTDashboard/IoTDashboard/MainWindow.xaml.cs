@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using IoTDashboard.Views;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -95,6 +96,12 @@ namespace IoTDashboard
                 Grid.SetRow(stateLabel, i + 1);
                 displayedIoTElements.Add(stateLabel);
                 iotListGrid.Children.Add(stateLabel);
+
+                var deviceActionBtns = new DeviceActionButtonsControl(devices[i]);
+                Grid.SetColumn(deviceActionBtns, 3);
+                Grid.SetRow(deviceActionBtns, i + 1);
+                displayedIoTElements.Add(deviceActionBtns);
+                iotListGrid.Children.Add(deviceActionBtns);
             }
         }
 

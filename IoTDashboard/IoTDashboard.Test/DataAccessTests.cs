@@ -44,5 +44,56 @@ namespace IoTDashboard.Test
 
             }
         }
+
+        [Fact]
+        public void ChangeDeviceState_WhenThereIsNoDeviceWithProvidedID_ThrowArgumentException()
+        {
+            //arange
+            IList<Device> expected = new List<Device>();
+            for (int i = 0; i < 3; i++)
+            {
+                var tempDevice = new Device()
+                {
+                    Id = i,
+                    Name = $"X{i}",
+                    State = DeviceState.Unknown
+                };
+                expected.Add(tempDevice);
+            }
+            _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
+            var dAServicee = new DataAccess(_fileReaderFake);
+
+            //act
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => dAServicee.ChangeDeviceState(5));
+        }
+
+        [Fact]
+        public void ChangeDeviceState_WhenStateIsRunning_ChangeItToStopped()
+        {
+            //arange
+            int id = 1;
+            IList<Device> expected = new List<Device>();
+            for (int i = 0; i < 3; i++)
+            {
+                var tempDevice = new Device()
+                {
+                    Id = i,
+                    Name = $"X{i}",
+                    State = DeviceState.Running
+                };
+                expected.Add(tempDevice);
+            }
+            _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
+            var dAServicee = new DataAccess(_fileReaderFake);
+
+            //act
+            dAServicee.ChangeDeviceState(id);
+            var device = dAServicee.GetAllDevices().Where(x => x.Id == id).FirstOrDefault();
+
+            //Assert
+            Assert.Equal(DeviceState.Stopped, device.State);
+        }
     }
 }

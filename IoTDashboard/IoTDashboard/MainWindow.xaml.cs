@@ -105,15 +105,9 @@ namespace IoTDashboard
             }
         }
 
-        private void AddActionButtons()
+        private void AddDevice_Click(object sender, RoutedEventArgs e)
         {
-            Button editButton = new Button();
-            editButton.FontSize = 10;
-            editButton.Content = "EDIT";
-
-            Button deleteButton = new Button();
-            editButton.FontSize = 10;
-            editButton.Content = "Delete";
+            dataAccess.AddDevice("New Device", DeviceState.Running);
         }
     }
 }

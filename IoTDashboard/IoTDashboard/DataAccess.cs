@@ -38,6 +38,25 @@ namespace IoTDashboard
             return device;
         }
 
+        public Device AddDevice(string name, DeviceState state = DeviceState.Unknown)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException();
+            }
+            var devices = GetAllDevices();
+            var newDevice = new Device()
+            {
+                Id = devices.Max(x => x.Id) + 1,
+                Name = name,
+                State = state
+            };
+            devices.Add(newDevice);
+            _fileReader.WriteJsonToFIle(devices, devicesJsonPath);
+
+            return newDevice;
+        }
+
         public IList<Device> GetAllDevices()
         {
             List<Device> devices = _fileReader.DecerializeFromFile<List<Device>>(devicesJsonPath);

@@ -9,6 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -20,10 +21,15 @@
                    FontSize="20"
                    Content="IoT Devices"/>
         </StackPanel>
-
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="Add device" Margin="5"/>
+            <Button Name="AddDevice"  Content="+" 
+        Width="20" Height="20" Margin="5"
+        HorizontalAlignment="Right" Click="AddDevice_Click"/>
+        </StackPanel>
+        
         <!-- IoT List definition -->
-
-        <Grid x:Name="iotListGrid" Grid.Row="1" Grid.Column="0">
+        <Grid x:Name="iotListGrid" Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -48,6 +54,6 @@
                    Content="Action"/>
         </Grid>
 
-        <Button Grid.Row="2" x:Name="refreshBtn" Content="Refresh" Click="refreshBtn_Click"/>
+        <Button Grid.Row="3" x:Name="refreshBtn" Content="Refresh" Click="refreshBtn_Click"/>
     </Grid>
 </Window>

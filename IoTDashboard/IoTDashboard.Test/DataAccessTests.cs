@@ -97,6 +97,41 @@ namespace IoTDashboard.Test
 
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void AddDevice_WhenNameParameterNotFound_ThrowArgumentException(string name)
+        {
+            //arange
+            IList<Device> expected = GenerateFakeDevices();
+            _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
+            var dAServicee = new DataAccess(_fileReaderFake);
+
+            //act
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => dAServicee.AddDevice(name));
+        }
+
+        [Theory]
+        [InlineData("Test1", DeviceState.Running)]
+        [InlineData("Test2", DeviceState.Stopped)]
+        public void AddDevice_WhenDeleted_ReturnsThatDevice(string name, DeviceState state)
+        {
+            //arange
+            IList<Device> expected = GenerateFakeDevices();
+            _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
+            var dAServicee = new DataAccess(_fileReaderFake);
+
+            //act
+            var actualDevice = dAServicee.AddDevice(name,state);
+
+            //Assert
+            Assert.Equal(3, actualDevice.Id);
+            Assert.Equal(name, actualDevice.Name);
+            Assert.Equal(state, actualDevice.State);
+        }
+
         private IList<Device> GenerateFakeDevices()
         {
             IList<Device> result = new List<Device>();

@@ -5,5 +5,7 @@ namespace IoTDashboard
     {
         IList<Device> GetAllDevices();
         void ChangeDeviceState(int id);
+
+        Device DeleteDevice(int id);
     }
 }

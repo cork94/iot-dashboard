@@ -15,17 +15,7 @@ namespace IoTDashboard.Test
         public void GetAllDevices_ReadesDevicesFromJson_RetrunsListOfDevices()
         {
             //arange
-            IList<Device> expected = new List<Device>();
-            for (int i = 0; i < 3; i++)
-            {
-                var tempDevice = new Device()
-                {
-                    Id = i,
-                    Name = $"X{i}",
-                    State = DeviceState.Unknown
-                };
-                expected.Add(tempDevice);
-            }
+            IList<Device> expected = GenerateFakeDevices();
             _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
             var dAServicee = new DataAccess(_fileReaderFake);
 
@@ -49,17 +39,7 @@ namespace IoTDashboard.Test
         public void ChangeDeviceState_WhenThereIsNoDeviceWithProvidedID_ThrowArgumentException()
         {
             //arange
-            IList<Device> expected = new List<Device>();
-            for (int i = 0; i < 3; i++)
-            {
-                var tempDevice = new Device()
-                {
-                    Id = i,
-                    Name = $"X{i}",
-                    State = DeviceState.Unknown
-                };
-                expected.Add(tempDevice);
-            }
+            IList<Device> expected = GenerateFakeDevices();
             _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
             var dAServicee = new DataAccess(_fileReaderFake);
 
@@ -74,17 +54,7 @@ namespace IoTDashboard.Test
         {
             //arange
             int id = 1;
-            IList<Device> expected = new List<Device>();
-            for (int i = 0; i < 3; i++)
-            {
-                var tempDevice = new Device()
-                {
-                    Id = i,
-                    Name = $"X{i}",
-                    State = DeviceState.Running
-                };
-                expected.Add(tempDevice);
-            }
+            IList<Device> expected = GenerateFakeDevices();
             _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
             var dAServicee = new DataAccess(_fileReaderFake);
 
@@ -94,6 +64,54 @@ namespace IoTDashboard.Test
 
             //Assert
             Assert.Equal(DeviceState.Stopped, device.State);
+        }
+
+        [Fact]
+        public void DeleteDevice_WhenNotFound_ThrowArgumentException()
+        {
+            //arange
+            IList<Device> expected = GenerateFakeDevices();
+            _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
+            var dAServicee = new DataAccess(_fileReaderFake);
+
+            //act
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => dAServicee.DeleteDevice(5));
+        }
+
+        [Fact]
+        public void DeleteDevice_WhenDeleted_ReturnsThatDevice()
+        {
+            //arange
+            int id = 1;
+            IList<Device> expected = GenerateFakeDevices();
+            _fileReaderFake.DecerializeFromFile<List<Device>>(Arg.Any<string>()).Returns(expected);
+            var dAServicee = new DataAccess(_fileReaderFake);
+
+            //act
+            var actualDevice = dAServicee.DeleteDevice(id);
+
+            //Assert
+            Assert.Equal(id, actualDevice.Id);
+
+        }
+
+        private IList<Device> GenerateFakeDevices()
+        {
+            IList<Device> result = new List<Device>();
+            for (int i = 0; i < 3; i++)
+            {
+                var tempDevice = new Device()
+                {
+                    Id = i,
+                    Name = $"X{i}",
+                    State = DeviceState.Running
+                };
+                result.Add(tempDevice);
+            }
+
+            return result;
         }
     }
 }

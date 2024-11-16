@@ -37,5 +37,10 @@ namespace IoTDashboard.Views
         {
             _dataAccess.ChangeDeviceState(_viewModel.GetDeviceId());
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dataAccess.DeleteDevice(_viewModel.GetDeviceId());
+        }
     }
 }

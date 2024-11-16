@@ -24,6 +24,20 @@ namespace IoTDashboard
             _fileReader.WriteJsonToFIle(devices, devicesJsonPath);
         }
 
+        public Device DeleteDevice(int id)
+        {
+            var devices = GetAllDevices();
+            var device = devices.FirstOrDefault(x => x.Id == id);
+            if (device == null)
+            {
+                throw new ArgumentException();
+            }
+            devices.Remove(device);
+            _fileReader.WriteJsonToFIle(devices, devicesJsonPath);
+
+            return device;
+        }
+
         public IList<Device> GetAllDevices()
         {
             List<Device> devices = _fileReader.DecerializeFromFile<List<Device>>(devicesJsonPath);

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using IoTDashboard.Views;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -95,18 +96,18 @@ namespace IoTDashboard
                 Grid.SetRow(stateLabel, i + 1);
                 displayedIoTElements.Add(stateLabel);
                 iotListGrid.Children.Add(stateLabel);
+
+                var deviceActionBtns = new DeviceActionButtonsControl(devices[i], dataAccess);
+                Grid.SetColumn(deviceActionBtns, 3);
+                Grid.SetRow(deviceActionBtns, i + 1);
+                displayedIoTElements.Add(deviceActionBtns);
+                iotListGrid.Children.Add(deviceActionBtns);
             }
         }
 
-        private void AddActionButtons()
+        private void AddDevice_Click(object sender, RoutedEventArgs e)
         {
-            Button editButton = new Button();
-            editButton.FontSize = 10;
-            editButton.Content = "EDIT";
-
-            Button deleteButton = new Button();
-            editButton.FontSize = 10;
-            editButton.Content = "Delete";
+            dataAccess.AddDevice("New Device", DeviceState.Running);
         }
     }
 }

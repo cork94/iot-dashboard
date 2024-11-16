@@ -22,12 +22,20 @@ namespace IoTDashboard.Views
     public partial class DeviceActionButtonsControl : UserControl
     {
         private DeviceActionButtonsViewModel _viewModel;
-        public DeviceActionButtonsControl(Device device)
+        private readonly IDataAccess _dataAccess;
+
+        public DeviceActionButtonsControl(Device device, IDataAccess dataAccess)
         {
             _viewModel = new DeviceActionButtonsViewModel(device);
+            _dataAccess = dataAccess;
             DataContext = _viewModel;
             InitializeComponent();
 
+        }
+
+        private void StateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _dataAccess.ChangeDeviceState(_viewModel.GetDeviceId());
         }
     }
 }

@@ -5,6 +5,7 @@ namespace IoTDashboard
 {
     public class DataAccess : IDataAccess
     {
+        private const string devicesJsonPath = @".\IoTdevices.json";
         private readonly IFileReader _fileReader;
         public DataAccess(IFileReader fileReader)
         {
@@ -13,17 +14,19 @@ namespace IoTDashboard
 
         public void ChangeDeviceState(int id)
         {
-            var device = GetAllDevices().FirstOrDefault(x=> x.Id ==id);
+            var devices = GetAllDevices();
+            var device = devices.FirstOrDefault(x=> x.Id ==id);
             if(device == null)
             {
                 throw new ArgumentException();
             }
             device.State = ChangeState(device.State);
+            _fileReader.WriteJsonToFIle(devices, devicesJsonPath);
         }
 
         public IList<Device> GetAllDevices()
         {
-            List<Device> devices = _fileReader.DecerializeFromFile<List<Device>>(@".\IoTdevice.json");
+            List<Device> devices = _fileReader.DecerializeFromFile<List<Device>>(devicesJsonPath);
 
             return devices;
         }

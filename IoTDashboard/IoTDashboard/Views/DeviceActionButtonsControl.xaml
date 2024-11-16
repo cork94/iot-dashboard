@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="100">
     <StackPanel Orientation="Horizontal">
-        <Button Name="StateBtn" Content="{Binding StateButtonName}" Width="45" Margin="3"/>
+        <Button Name="StateBtn" Content="{Binding StateButtonName}" Width="45" Margin="3" Click="StateBtn_Click"/>
         <Button Content="Delete" Width="45" Margin="3"/>
     </StackPanel>
 </UserControl>

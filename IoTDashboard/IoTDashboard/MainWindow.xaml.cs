@@ -97,7 +97,7 @@ namespace IoTDashboard
                 displayedIoTElements.Add(stateLabel);
                 iotListGrid.Children.Add(stateLabel);
 
-                var deviceActionBtns = new DeviceActionButtonsControl(devices[i]);
+                var deviceActionBtns = new DeviceActionButtonsControl(devices[i], dataAccess);
                 Grid.SetColumn(deviceActionBtns, 3);
                 Grid.SetRow(deviceActionBtns, i + 1);
                 displayedIoTElements.Add(deviceActionBtns);

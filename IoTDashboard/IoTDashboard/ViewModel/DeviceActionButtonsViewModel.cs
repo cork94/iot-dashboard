@@ -15,6 +15,8 @@ namespace IoTDashboard.ViewModel
             _device = device;
         }
 
+        public int GetDeviceId() => _device.Id;
+
         public string StateButtonName
         {
             get {
